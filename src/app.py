@@ -13,6 +13,7 @@ from werkzeug.utils import secure_filename
 from utils.OCR_processor import make_response, find_closest_match
 from flask_httpauth import HTTPBasicAuth
 from utils.configuration import env
+import datetime
 
 
 
@@ -46,6 +47,9 @@ def confirm():
     
     updated_records = []
 
+    current_date = datetime.date.today()
+    formatted_date = current_date.strftime("%d.%m.%Y")
+    
     # Retrieve the corrected values for each image
     for i in range(number_of_images):
         include_key = f'include_{i}'
@@ -71,7 +75,7 @@ def confirm():
             }
         try: 
             # Render the final letter with the corrected data
-            html = render_template('PDF_template_export.html', corrected_data=record)
+            html = render_template('PDF_template_export.html', corrected_data=record,current_date_formatted=formatted_date)
             render_pdf(HTML(string=html).write_pdf((record['insurance_number'])+'.pdf')) ##convert html--> pdf
         except: pass    
     listFileNames=glob.glob("*.pdf")

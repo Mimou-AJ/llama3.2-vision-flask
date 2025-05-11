@@ -2,82 +2,171 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Offizieller Brief an die Krankenkasse</title>
+    <title>Antrag auf Kostenübernahme DiGA</title>
     <style>
+        @page {
+            margin: 20mm 20mm 20mm 25mm; /* Top, Right, Bottom, Left (DIN 5008 typical left margin) */
+        }
+
         body {
-            font-family: 'Arial', sans-serif;
-            margin: 20mm;
-            color: #000;
+            font-family: 'Calibri', 'Helvetica Neue', 'Arial', sans-serif; /* Modern, widely available fonts */
+            font-size: 11pt; /* Standard letter size */
+            line-height: 1.4; /* Improved readability */
+            color: #333333;
+            margin: 0; /* Reset browser default margin, @page handles PDF margins */
         }
-        .container {
-            max-width: 800px;
-            margin: auto;
+
+        .letter-container {
+            width: 100%;
+            max-width: 170mm; /* Approx. content width within A4 margins */
+            margin: 0 auto; /* Center content if body had padding, but not strictly needed with @page */
         }
-        h1 {
-            text-align: center;
-            font-size: 18pt;
-            margin-bottom: 20mm;
+
+        .sender-info {
+            font-size: 9pt;
+            color: #555555;
+            margin-bottom: 10mm;
+            /* If you have a logo or full sender address, it would go here.
+               For now, we'll use the name from corrected_data and a placeholder. */
+            /* Example: Your Clinic Name | Musterstraße 1 | 12345 Musterstadt */
         }
-        .address-block {
-            margin-bottom: 5mm;
-            line-height: 1.5;
-        }
-        .salutation, .body-text, .closing {
-            margin-bottom: 15mm;
-        }
-        .body-text p {
-            line-height: 1.6;
-        }
-        .closing p {
+        .sender-info p {
             margin: 0;
+            line-height: 1.3;
         }
-        .signature {
-            margin-top: 20mm;
+
+
+        .recipient-address {
+            margin-bottom: 10mm; /* Space before date */
+        }
+        .recipient-address p {
+            margin: 0 0 2px 0; /* Small space between lines of address */
+        }
+
+        .date-line {
+            text-align: right;
+            margin-bottom: 10mm;
+            font-size: 11pt;
+        }
+
+        .subject-line {
             font-weight: bold;
+            margin-bottom: 10mm;
+            font-size: 12pt; /* Slightly larger for emphasis */
         }
-        .signature p {
+
+        .salutation,
+        .body-text,
+        .closing-formula {
+            margin-bottom: 5mm; /* Standard paragraph spacing */
+        }
+
+        .body-text p {
+            margin-bottom: 4mm;
+            text-align: justify; /* Justified text for a formal look */
+        }
+
+        .signature-block {
+            margin-top: 10mm; /* Space for handwritten signature if printed */
+        }
+        .signature-block p {
+            margin: 0 0 2mm 0;
+        }
+
+        .enclosures {
+            margin-top: 15mm;
+            font-size: 10pt;
+            color: #555555;
+        }
+        .enclosures p {
             margin: 0;
         }
+
+        .attachment-page {
+            page-break-before: always;
+            text-align: center; /* Center the image on its page */
+            padding-top: 10mm; /* Some space from the top */
+        }
+        .attachment-page img {
+            max-width: 100%;
+            height: auto;
+            max-height: 250mm; /* Ensure it doesn't overflow the page */
+            object-fit: contain;
+        }
+
+        /* Utility for placeholders */
+        .placeholder {
+            color: #888;
+            font-style: italic;
+        }
+
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- ADRESS-DATEN Section -->
-        <div class="address-block">
-            <p>{{ corrected_data['address'] | replace('\n', '<br>')|safe }}</p>
-        </div>
-        <!-- KRANKENKASSE Section -->
-        <div class="address-block">
-            <p>{{ corrected_data['insurance_company'] }}</p>
+    <div class="letter-container">
+       
+        <!-- RECIPIENT ADDRESS (Empfänger) -->
+        <div class="recipient-address">
+            <!-- <p>{{ corrected_data['insurance_company'] }}</p> -->
+            <p>{{ corrected_data['address'] | replace('\n', '<br>') | safe }}</p>
         </div>
 
+        <!-- DATE (Datum) -->
+        <div class="date-line">
+            <p>{{ current_date_formatted }}</p>
+        </div>
+
+        <!-- SUBJECT (Betreff) -->
+        <div class="subject-line">
+            <p>Antrag auf Kostenübernahme für die digitale Gesundheitsanwendung (DiGA) „[Name der App hier einfügen]“ – Versicherter: {{ corrected_data['name'] }}, Versichertennummer: {{ corrected_data['insurance_number'] }}</p>
+        </div>
+
+        <!-- SALUTATION (Anrede) -->
         <div class="salutation">
             <p>Sehr geehrte Damen und Herren,</p>
         </div>
 
+        <!-- BODY TEXT (Textkörper) -->
         <div class="body-text">
             <p>
-                Ich leide an Typ-II-Diabetes und habe von meinem Arzt die digitale Gesundheitsanwendung (app name)
-                verordnet bekommen. Ein Nachweis ist diesem Schreiben beigefügt. 
-                Ich bitte Sie, mir einen entsprechenden Freischaltcode zuzusenden, 
-                sodass ich den digitalen Therapiebegleiter nutzen kann.
+                ich, {{ corrected_data['name'] }}, leide an Typ-II-Diabetes und habe von meinem Arzt die digitale Gesundheitsanwendung (DiGA) „[Name der App hier einfügen]“
+                verordnet bekommen. Einen Nachweis über die Verordnung (Rezept) finden Sie diesem Schreiben als Anlage beigefügt.
+            </p>
+            <p>
+                Gemäß § 33a SGB V bitte ich Sie um die Übernahme der Kosten und um Zusendung eines entsprechenden Freischaltcodes,
+                damit ich diesen digitalen Therapiebegleiter nutzen kann.
+            </p>
+            <p>
+                Für Ihre Bemühungen bedanke ich mich im Voraus.
             </p>
         </div>
 
-        <!-- Closing -->
-        <div class="closing">
-            <p>Mit freundlichen Grüßen,</p>
-            <div class="signature">
-                <p>{{ corrected_data['name'] }}</p>
-                <p>Versichertennummer: {{ corrected_data['insurance_number'] }}</p>
-            </div>
+        <!-- CLOSING (Grußformel) -->
+        <div class="closing-formula">
+            <p>Mit freundlichen Grüßen</p>
         </div>
+
+        <!-- SIGNATURE (Unterschrift) -->
+        <div class="signature-block">
+            <p style="margin-bottom: 5mm;">___________________________</p> <!-- Line for manual signature -->
+            <p>{{ corrected_data['name'] }}</p>
+            <p>Versichertennummer: {{ corrected_data['insurance_number'] }}</p>
+            <!-- You might want to add Birthdate here if it's available and relevant:
+            {% if corrected_data['birthdate'] %}
+            <p>Geburtsdatum: {{ corrected_data['birthdate'] }}</p>
+            {% endif %}
+            -->
+        </div>
+        
     </div>
 
-    <div style="page-break-before: always;">
-        <img src="data:image/png;base64,{{ corrected_data['processed_image']}}" alt="Processed Image" style="width:100%; height:auto;">
+    <!-- ATTACHMENT PAGE (Anhang) -->
+    <div class="attachment-page">
+        <!-- ENCLOSURES (Anlagen) -->
+        <div class="enclosures">
+            <p>Anlage: Verordnungsnachweis (Kopie des Rezepts)</p>
+        </div>
+        <img src="data:image/png;base64,{{ corrected_data['processed_image']}}" alt="Verordnungsnachweis">
     </div>
-    
 </body>
 </html>
