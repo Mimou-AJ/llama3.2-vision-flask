@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offizieller Brief an die Krankenkasse</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20mm;
+            color: #000;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+        h1 {
+            text-align: center;
+            font-size: 18pt;
+            margin-bottom: 20mm;
+        }
+        .address-block {
+            margin-bottom: 5mm;
+            line-height: 1.5;
+        }
+        .salutation, .body-text, .closing {
+            margin-bottom: 15mm;
+        }
+        .body-text p {
+            line-height: 1.6;
+        }
+        .closing p {
+            margin: 0;
+        }
+        .signature {
+            margin-top: 20mm;
+            font-weight: bold;
+        }
+        .signature p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ADRESS-DATEN Section -->
+        <div class="address-block">
+            <p>{{ corrected_data['address'] | replace('\n', '<br>')|safe }}</p>
+        </div>
+        <!-- KRANKENKASSE Section -->
+        <div class="address-block">
+            <p>{{ corrected_data['insurance_company'] }}</p>
+        </div>
+
+        <div class="salutation">
+            <p>Sehr geehrte Damen und Herren,</p>
+        </div>
+
+        <div class="body-text">
+            <p>
+                Ich leide an Typ-II-Diabetes und habe von meinem Arzt die digitale Gesundheitsanwendung (app name)
+                verordnet bekommen. Ein Nachweis ist diesem Schreiben beigefügt. 
+                Ich bitte Sie, mir einen entsprechenden Freischaltcode zuzusenden, 
+                sodass ich den digitalen Therapiebegleiter nutzen kann.
+            </p>
+        </div>
+
+        <!-- Closing -->
+        <div class="closing">
+            <p>Mit freundlichen Grüßen,</p>
+            <div class="signature">
+                <p>{{ corrected_data['name'] }}</p>
+                <p>Versichertennummer: {{ corrected_data['insurance_number'] }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div style="page-break-before: always;">
+        <img src="data:image/png;base64,{{ corrected_data['processed_image']}}" alt="Processed Image" style="width:100%; height:auto;">
+    </div>
+    
+</body>
+</html>

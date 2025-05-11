@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  ocr-flask-app:
+    build: ./docker
+    image: python:flask_app
+    container_name: ocr_flask_app
+    volumes:
+      - ./src:/app
+      - model-data:/root/.ollama   # Persist model files here
+    ports:
+      - "5000:5000"   # Flask app port
+      - "11434:11434" # Ollama service port
+    restart: unless-stopped
+    entrypoint:
+      - entrypoint.sh
+
+volumes:
+  model-data:

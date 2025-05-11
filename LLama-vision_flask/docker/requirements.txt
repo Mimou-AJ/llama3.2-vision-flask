@@ -1,0 +1,15 @@
+flask==2.1.2
+requests
+Pillow
+python-dotenv==0.20.0
+py3-wkhtmltopdf
+flask_weasyprint
+pandas== 2.2.2
+numpy==2.0.0
+flask-wtf
+pdf2image
+pypdfium2
+pybase64
+Werkzeug==2.2.2
+thefuzz
+flask_httpauth
