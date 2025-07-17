@@ -13,7 +13,7 @@ A fully containerized OCR (Optical Character Recognition) platform powered by th
 ## 🚀 Features
 
 -   **Advanced OCR**: Utilizes the powerful `llama3.2-vision` model through Ollama for accurate text extraction.
--   **Multi-format Support**: Accepts both PDF and image files for OCR processing via a user-friendly web interface or a direct API endpoint.
+-   **Multi-format Support**: Accepts PDF files for OCR processing via a user-friendly web interface or a direct API endpoint.
 -   **Structured Data Extraction**: Specifically designed to extract key information from medical receipts, including:
     -   Insurance company name
     -   Patient’s full name
