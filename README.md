@@ -99,6 +99,7 @@ All endpoints are secured and require Basic Authentication.
 -   **Endpoint**: `/api/v1/OCR/image2text/confirm`
 -   **Method**: `POST`
 -   **Description**: Takes the potentially corrected data, finalizes it, and generates the PDF letter and a corresponding ZIP archive.
+<img width="1776" height="1101" alt="image" src="https://github.com/user-attachments/assets/bcaa136e-aeb2-414f-91c4-bf08ff3757e5" />
 
 ---
 
